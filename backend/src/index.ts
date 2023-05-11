@@ -12,17 +12,21 @@ const PORT = process.env.PORT || 3001
 
 app.use(cors())
 app.use(express.json())
+app.use((err: Error, req: Request, res: Response, next: NextFunction)=> {
+console.error(err.message)
+res.status(500).send("Server Error")
+})
+
+
+
+
+
 
 
 app.get("/", asyncMiddleware(async(req: Request, res: Response)=> {
     res.send("Port is ready")
 }))
 
-
-app.use((err: Error, req: Request, res: Response, next: NextFunction)=> {
-console.error(err.message)
-res.status(500).send("Server Error")
-})
 
 
 
