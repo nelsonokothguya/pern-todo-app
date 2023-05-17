@@ -1,34 +1,20 @@
-import express, {Express, Request, Response, NextFunction} from "express"
+import express, {Express} from "express"
 import cors from "cors"
 import dotenv from "dotenv"
-import { asyncMiddleware } from "./middlewares/asyncMiddleware"
-
-
+import { errorHandler } from "./middlewares/errorHandler"
+import todoRoutes from "./routes/todoRoutes"
+import deletedTodoRoutes from "./routes/deletedTodoRoutes"
 
 dotenv.config()
 
-const app: Express = express()
-const PORT = process.env.PORT || 3001
+export const app: Express = express()
 
 app.use(cors())
 app.use(express.json())
-app.use((err: Error, req: Request, res: Response, next: NextFunction)=> {
-console.error(err.message)
-res.status(500).send("Server Error")
-})
+
+app.use('/todos', todoRoutes)
+app.use('/deleted', deletedTodoRoutes)
+
+app.use(errorHandler)
 
 
-
-
-
-
-
-app.get("/", asyncMiddleware(async(req: Request, res: Response)=> {
-    res.send("Port is ready")
-}))
-
-
-
-
-
-app.listen(PORT, ()=> {console.log(`Listening to PORT ${PORT}`)})
