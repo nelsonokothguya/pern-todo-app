@@ -42,17 +42,14 @@ jobs:
         node-version: ${{ env.NODE_VERSION }}
         cache: 'npm'
 
-    - name: Navigate to the Backend directory
-      run: cd backend
-      
     - name: npm install, build, and test
       run: |
-        npm install
-        npm run build --if-present
-        npm run test --if-present
+        cd backend && npm install
+        cd backend && npm run build --if-present
+        cd backend && npm run test --if-present
         
     - name: Run migrations
-      run: npm run migrate:deploy
+      run: cd backend && npm run migrate:deploy
 
     - name: Upload artifact for deployment job
       uses: actions/upload-artifact@v3
