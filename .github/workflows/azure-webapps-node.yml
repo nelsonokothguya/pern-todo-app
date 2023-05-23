@@ -23,9 +23,9 @@ on:
   workflow_dispatch:
 
 env:
-  AZURE_WEBAPP_NAME: todo-app-ai
-  AZURE_WEBAPP_PACKAGE_PATH: './backend'
-  NODE_VERSION: '18.12'
+  AZURE_WEBAPP_NAME: todo-app-ai    # set this to your application's name
+  AZURE_WEBAPP_PACKAGE_PATH: 'backend' # set this to the path to your web app project
+  NODE_VERSION: '18.12'  # set this to the node version to use
 
 permissions:
   contents: read
@@ -36,26 +36,40 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: Set up Node.js
+    - name: Use Node.js ${{ env.NODE_VERSION }}
       uses: actions/setup-node@v3
       with:
         node-version: ${{ env.NODE_VERSION }}
-        cache: 'npm'
+
+    - name: Get npm cache directory
+      id: npm-cache
+      run: echo "::set-output name=dir::$(npm config get cache)"
+
+    - name: Cache Node.js modules
+      uses: actions/cache@v2
+      with:
+        path: ${{ steps.npm-cache.outputs.dir }}
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
+          
+    - name: Navigate to the Backend directory
+      run: cd backend
 
     - name: npm install, build, and test
       run: |
-        cd backend && npm install
-        cd backend && npm run build --if-present
-        cd backend && npm run test --if-present
+        npm install
+        npm run build --if-present
+        npm run test --if-present
         
     - name: Run migrations
-      run: cd backend && npm run migrate:deploy
+      run: npm run migrate:deploy
 
     - name: Upload artifact for deployment job
       uses: actions/upload-artifact@v3
       with:
         name: node-app
-        path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+        path: .
 
   deploy:
     permissions:
