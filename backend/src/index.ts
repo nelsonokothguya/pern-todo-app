@@ -7,7 +7,7 @@ import deletedTodoRoutes from "./routes/deletedTodoRoutes"
 
 dotenv.config()
 
-export const app: Express = express()
+const app: Express = express()
 
 app.use(cors())
 app.use(express.json())
@@ -17,4 +17,4 @@ app.use('/deleted', deletedTodoRoutes)
 
 app.use(errorHandler)
 
-
+export default app;
