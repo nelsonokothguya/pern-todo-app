@@ -54,7 +54,7 @@ jobs:
       working-directory: ./backend
       run: |
         npm install
-        npm run build --if-present
+        npm run build
         npm run migrate:deploy
       env:
          DATABASE_URL: ${{ secrets.DATABASE_URL }}
