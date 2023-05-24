@@ -61,7 +61,9 @@ jobs:
     - name: Run migrations
       working-directory: ./backend
       run: npm run migrate:deploy
-
+      env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      
     - name: Upload artifact for deployment job
       uses: actions/upload-artifact@v3
       with:
