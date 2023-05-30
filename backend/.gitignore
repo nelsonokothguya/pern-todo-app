@@ -2,5 +2,4 @@ node_modules
 .env
 tests
 jest.config.js
-tsconfig.json
-prisma
+
