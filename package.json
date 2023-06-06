@@ -1,0 +1,44 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "PERN todo-app",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "start": "nodemon",
+    "build": "tsc",
+    "serve": "node dist/index.js",
+    "migrate:deploy": "prisma migrate deploy"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/nelsonokothguya/pern-todo-app.git"
+  },
+  "author": "Nelson Okoth",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nelsonokothguya/pern-todo-app/issues"
+  },
+  "homepage": "https://github.com/nelsonokothguya/pern-todo-app#readme",
+  "dependencies": {
+    "@prisma/client": "^4.13.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "esm": "^3.2.25",
+    "express": "^4.18.2",
+    "openai": "^3.2.1",
+    "pg": "^8.11.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.21.8",
+    "@babel/preset-env": "^7.21.5",
+    "@babel/preset-typescript": "^7.21.5",
+    "@types/cors": "^2.8.13",
+    "@types/dotenv": "^8.2.0",
+    "@types/express": "^4.17.17",
+    "jest": "^29.5.0",
+    "nodemon": "^2.0.22",
+    "prisma": "^4.13.0",
+    "typescript": "^5.0.4"
+  }
+}
