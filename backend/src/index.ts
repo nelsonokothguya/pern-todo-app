@@ -1,5 +1,7 @@
 import express, {Express} from "express"
 import cors from "cors"
+import bodyParser from "body-parser"
+
 import dotenv from "dotenv"
 import { errorHandler } from "./middlewares/errorHandler"
 import todoRoutes from "./routes/todoRoutes"
@@ -16,5 +18,8 @@ app.use('/activetodos', todoRoutes)
 app.use('/deletedtodos', deletedTodoRoutes)
 
 app.use(errorHandler)
+
+
+
 
 export default app;

@@ -6,26 +6,31 @@ export const todosSlice = createSlice({
     initialState: [] as TodoType[],
     reducers: {
         addTodo: (state, action: PayloadAction<TodoType>) => {
-            //ADD TODO TO TODOS ARRAY
                 state.push(action.payload)
-           
         },
         removeTodo: (state, action: PayloadAction<number>)=> {
-            //REMOVE TODO FROM TODOS ARRAY BASED ON ID
+
             const todoId = action.payload;
              const filteredTodos = state.filter(todo => todo.id !== todoId);
-console.log("filteredTodos", filteredTodos)
+            console.log("filteredTodos", filteredTodos)
              return filteredTodos;
-             
-    
+        },
+        editTodo: (state, action: PayloadAction<TodoType>) => {
+            const updatedTodo = action.payload;
+            return state.map(todo => {
+                if (todo.id === updatedTodo.id) {
+                    todo.title = updatedTodo.title;
+                }
+                return todo;
+            })
+            
         },
         fetchTodos: function (state, action: PayloadAction<TodoType[]>) {
-            //GET ALL TODOS 
             return [...action.payload];
         },
     }, 
 });
 
 
-export const {addTodo, removeTodo, fetchTodos, } = todosSlice.actions;
+export const {addTodo, removeTodo, editTodo, fetchTodos, } = todosSlice.actions;
 export const todoReducer = todosSlice.reducer;

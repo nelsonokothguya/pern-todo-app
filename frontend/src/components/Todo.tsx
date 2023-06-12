@@ -1,11 +1,13 @@
 import React from "react";
+import Checkbox from "./Checkbox";
 import { TodoType } from "../store/todos/types";
 import { ListItem } from "@mui/material";
-import Checkbox from "./Checkbox";
+import { Edit } from "./Edit";
 
 interface TodoProps {
   todo: TodoType;
   onToggling: (checked: boolean, todoId: number) => void;
+  onEditing: (title: string, todoId: number) => void;
 }
 
 class Todo extends React.Component<TodoProps> {
@@ -18,6 +20,11 @@ class Todo extends React.Component<TodoProps> {
           id={this.props.todo.id}
           onCheckboxChange={(checked: boolean) =>
             this.props.onToggling(checked, this.props.todo.id)
+          }
+        />
+        <Edit
+          onEditAndSave={(title: string) =>
+            this.props.onEditing(title, this.props.todo.id)
           }
         />
       </ListItem>

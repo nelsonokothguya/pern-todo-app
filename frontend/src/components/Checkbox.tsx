@@ -1,5 +1,6 @@
 import * as React from "react";
-import { Checkbox as MUICheckbox, FormControlLabel } from "@mui/material";
+import { Switch, FormControlLabel } from "@mui/material";
+
 
 interface CheckboxProps {
   label: string;
@@ -26,7 +27,7 @@ class Checkbox extends React.Component<CheckboxProps> {
     return (
       <FormControlLabel
         control={
-          <MUICheckbox
+          <Switch
             checked={this.props.completed}
             onChange={this.handleCheckboxChange}
             style={checkboxStyle}

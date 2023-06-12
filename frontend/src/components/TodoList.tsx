@@ -5,11 +5,16 @@ import Todo from "./Todo";
 interface TodoListProps {
   todos: TodoType[];
   onToggle: (checked: boolean, todoId: number) => void;
+  onEditTodo: (title: string, todoId: number) => void;
 }
 
 class TodoList extends React.Component<TodoListProps> {
   handleTodoToggle = (checked: boolean, todoId: number) => {
     this.props.onToggle(checked, todoId);
+  };
+
+  handleEditingOfTodo = (title: string, todoId: number) => {
+    this.props.onEditTodo(title, todoId);
   };
 
   render() {
@@ -23,6 +28,9 @@ class TodoList extends React.Component<TodoListProps> {
             todo={todo}
             onToggling={(checked: boolean, todoId: number) =>
               this.handleTodoToggle(checked, todoId)
+            }
+            onEditing={(title: string, todoId: number) =>
+              this.handleEditingOfTodo(title, todoId)
             }
           />
         ))}

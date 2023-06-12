@@ -4,6 +4,7 @@ import {
   addTodo,
   removeTodo,
   fetchTodos,
+  editTodo,
 } from "../store/todos/todosActionCreatorsAndReducer";
 import {
   addDeletedTodo,
@@ -25,6 +26,7 @@ interface AppProps {
   deletedTodos: DeletedTodoType[];
   addTodo: typeof addTodo;
   fetchTodos: typeof fetchTodos;
+  editTodo: typeof editTodo;
   fetchDeletedTodos: typeof fetchDeletedTodos;
   removeTodo: typeof removeTodo;
   addDeletedTodo: typeof addDeletedTodo;
@@ -69,12 +71,28 @@ class App extends React.Component<AppProps> {
 
   public deleteTodoFromActiveTodos = async (completed: boolean, id: number) => {
     try {
-      const deletedResponse = await axios.delete(
+      const response = await axios.delete(
         `http://localhost:8080/activetodos/${id}`
       );
-      const deletedTodo: DeletedTodoType = deletedResponse.data;
+      const deletedTodo: DeletedTodoType = response.data;
       this.props.removeTodo(id);
       this.props.addDeletedTodo(deletedTodo);
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
+  };
+
+  //TO HANDLE EDITING OF TODOS IN THE ACTIVE TODO LIST & UPDATING THE STATE
+  public handleEditTodo = async (title: string, id: number) => {
+    try {
+      const response = await axios.patch(
+        `http://localhost:8080/activetodos/${id}`,
+        { title }
+      );
+      const patchedTodo: TodoType = response.data;
+      console.log("patchedTodo", patchedTodo);
+      this.props.editTodo(patchedTodo);
     } catch (error) {
       console.log(error);
       return error;
@@ -105,6 +123,7 @@ class App extends React.Component<AppProps> {
         <TodoList
           todos={this.props.todos}
           onToggle={this.deleteTodoFromActiveTodos}
+          onEditTodo={this.handleEditTodo}
         />
         <DeletedTodoList
           deletedTodos={this.props.deletedTodos}
