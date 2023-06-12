@@ -12,7 +12,7 @@ A simple Todo app built with Express, Node, PSQL, Prisma, TypeScript, and MUI.
 
 1. Install dependencies
 
-npm install
+`npm install`
 
 2. Create a PostgreSQL database
 
@@ -20,7 +20,7 @@ npm install
 
 4. Run the app
 
-npm start
+`npm start`
 
 ## Usage
 The app can be accessed at localhost:3000.
